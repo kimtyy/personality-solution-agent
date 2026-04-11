@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>입체 성격 분석 및 비즈니스 솔루션</title>
+  <meta name="description" content="MBTI 8기능과 에니어그램을 결합한 입체적 성격 분석 및 맞춤형 비즈니스 협업 가이드">
+  <link rel="stylesheet" href="style.css">
+  <link rel="manifest" href="manifest.json">
+  <meta name="theme-color" content="#7c3aed">
+  <link rel="apple-touch-icon" href="icon.png">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script>
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('sw.js')
+          .then(reg => console.log('SW Registered', reg))
+          .catch(err => console.log('SW Failed', err));
+      });
+    }
+  </script>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1>입체 성격 분석 에이전트</h1>
+      <p>MBTI × Enneagram Synergy Business Solution</p>
+    </header>
+
+    <!-- 화면 1: 자가 진단 및 입력 -->
+    <section id="input-section">
+      <div class="report-header">
+        <h2>성격 유형 진단</h2>
+        <p>간편 또는 정밀 테스트를 통해 나를 분석해보세요.</p>
+      </div>
+      
+      <div class="mode-selection">
+        <div class="mode-card" id="start-simple-test">
+          <h4>⚡ 간편 측정</h4>
+          <p>약 21문항 / 2분 소요<br>핵심 지표 위주의 빠른 분석</p>
+        </div>
+        <div class="mode-card" id="start-precise-test" style="border-color: var(--accent-color);">
+          <h4>🔍 정밀 측정</h4>
+          <p>약 58문항 / 6분 소요<br>디테일한 행동 패턴 분석</p>
+        </div>
+      </div>
+
+      <div style="margin-top: 2rem; border-top: 1px solid var(--glass-border); padding-top: 1.5rem;">
+        <label style="display: block; margin-bottom: 1rem; color: var(--text-secondary); text-align: center;">또는 직접 유형 선택하기</label>
+        <div class="grid-inputs">
+          <div class="input-group">
+            <label for="mbti-select">MBTI</label>
+            <select id="mbti-select">
+              <option value="ENTJ">ENTJ</option>
+              <option value="INTJ">INTJ</option>
+              <option value="ENTP">ENTP</option>
+              <option value="INTP">INTP</option>
+              <option value="ENFJ">ENFJ</option>
+              <option value="INFJ">INFJ</option>
+              <option value="ENFP">ENFP</option>
+              <option value="INFP">INFP</option>
+              <option value="ESTJ">ESTJ</option>
+              <option value="ISTJ">ISTJ</option>
+              <option value="ESFJ">ESFJ</option>
+              <option value="ISFJ">ISFJ</option>
+              <option value="ESTP">ESTP</option>
+              <option value="ISTP">ISTP</option>
+              <option value="ESFP">ESFP</option>
+              <option value="ISFP">ISFP</option>
+            </select>
+          </div>
+          <div class="input-group">
+            <label for="enneagram-select">에니어그램</label>
+            <select id="enneagram-select">
+              <option value="1">1번 (개혁가)</option>
+              <option value="2">2번 (조력가)</option>
+              <option value="3">3번 (성취자)</option>
+              <option value="4">4번 (예술가)</option>
+              <option value="5">5번 (탐구자)</option>
+              <option value="6">6번 (충실가)</option>
+              <option value="7">7번 (열정가)</option>
+              <option value="8">8번 (도전자)</option>
+              <option value="9">9번 (평화주의자)</option>
+            </select>
+          </div>
+          <div class="input-group">
+            <label for="stress-slider">스트레스 지수: <span id="stress-value" class="badge">5</span></label>
+            <input type="range" id="stress-slider" min="1" max="10" value="5">
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 테스트 모달 -->
+    <div id="test-overlay" class="test-overlay">
+      <div class="test-container">
+        <div class="progress-wrapper">
+          <div class="progress-bar-bg">
+            <div id="test-progress" class="progress-bar-fill"></div>
+          </div>
+          <div class="test-footer">
+            <span id="test-step-indicator">질문 1 / 20</span>
+            <span id="test-category-badge" class="badge">MBTI 섹션</span>
+          </div>
+        </div>
+        
+        <div id="question-area">
+          <h3 class="question-text" id="question-text">질문 내용이 여기에 표시됩니다.</h3>
+          <div class="answer-options" id="answer-options">
+            <button class="option-btn" data-score="2">매우 그렇다</button>
+            <button class="option-btn" data-score="1">그렇다</button>
+            <button class="option-btn" data-score="0">보통이다</button>
+            <button class="option-btn" data-score="-1">아니다</button>
+            <button class="option-btn" data-score="-2">매우 아니다</button>
+          </div>
+        </div>
+
+        <div class="test-footer" style="margin-top: 3rem;">
+          <button id="cancel-test" style="background: none; border: none; color: var(--text-secondary); cursor: pointer;">테스트 중단</button>
+          <span id="test-encouragement" style="font-style: italic; color: var(--accent-color);">좋은 시작입니다!</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- 화면 2: 분석 결과 -->
+    <section id="analysis-section">
+      <div class="report-header">
+        <h2 id="report-title">입체적 자아 분석 리포트</h2>
+        <span class="badge" style="background: var(--gold); color: #000;">PRO AI ANALYSIS</span>
+      </div>
+      
+      <div class="result-grid">
+        <div class="chart-area">
+          <canvas id="radarChart"></canvas>
+        </div>
+        <div class="analysis-text">
+          <h3>[전문 분석 보고서]</h3>
+          <div id="analysis-report">
+            <!-- 리포트 내용이 여기에 업데이트됩니다. -->
+          </div>
+          <div id="alert-container" class="alert-box" style="display: none;">
+            <!-- 퇴화 행동 경고가 여기에 표시됩니다. -->
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 화면 3: 협업 도구 -->
+    <section id="collaboration-section">
+      <div class="report-header">
+        <h2>동료 협업 시너져 가이드</h2>
+      </div>
+      
+      <div class="grid-inputs">
+        <div class="input-group">
+          <label for="colleague-mbti">동료의 MBTI 유형 선택</label>
+          <select id="colleague-mbti">
+            <option value="ISTJ">ISTJ</option>
+            <option value="ENTJ">ENTJ</option>
+            <option value="INTP">INTP</option>
+            <option value="ENFP">ENFP</option>
+            <!-- 모든 16가지 유형을 넣는 것이 좋지만 지면상 우선 주요 예시들만 배치하거나 전체 다 넣습니다. -->
+            <option value="INTJ">INTJ</option>
+            <option value="ENTP">ENTP</option>
+            <option value="ENFJ">ENFJ</option>
+            <option value="INFJ">INFJ</option>
+            <option value="INFP">INFP</option>
+            <option value="ESTJ">ESTJ</option>
+            <option value="ESFJ">ESFJ</option>
+            <option value="ISFJ">ISFJ</option>
+            <option value="ESTP">ESTP</option>
+            <option value="ISTP">ISTP</option>
+            <option value="ESFP">ESFP</option>
+            <option value="ISFP">ISFP</option>
+          </select>
+        </div>
+        <div class="input-group" style="grid-column: span 2;">
+          <label>해당 동료와 원활하게 소통하는 해결책</label>
+          <div id="colleague-tips" style="background: var(--glass-bg); padding: 1.5rem; border-radius: 12px; border: 1px solid var(--glass-border);">
+            <!-- 동료 협업 팁이 인스턴트하게 출력됩니다. -->
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <footer style="text-align: center; color: var(--text-secondary); padding: 2rem; font-size: 0.8rem;">
+      &copy; 2026 Multidimensional Personality Analysis & Business Solution. 성격 유형은 나를 찾는 힌트일 뿐입니다.
+    </footer>
+  </div>
+
+  <script type="module" src="main.js"></script>
+</body>
+</html>

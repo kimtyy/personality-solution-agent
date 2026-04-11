@@ -258,17 +258,20 @@ function updateColleagueTips() {
       </p>
     </div>
     <ul style="list-style: none; padding: 0; font-size: 0.95rem;">
-      <li style="display: flex; gap: 0.8rem; margin-bottom: 0.8rem; align-items: flex-start;">
-        <span style="min-width: 1.2rem;">✅</span>
-        <div><strong>강점:</strong> ${info.strengths}</div>
+      <li style="display: flex; margin-bottom: 0.8rem; align-items: flex-start;">
+        <span style="flex-shrink: 0; width: 1.5rem;">✅</span>
+        <span style="flex-shrink: 0; width: 3.5rem; font-weight: bold; color: var(--text-primary);">강점:</span>
+        <span style="flex-grow: 1; word-break: keep-all;">${info.strengths}</span>
       </li>
-      <li style="display: flex; gap: 0.8rem; margin-bottom: 0.8rem; align-items: flex-start;">
-        <span style="min-width: 1.2rem;">⚠️</span>
-        <div><strong>주의:</strong> ${info.weaknesses}</div>
+      <li style="display: flex; margin-bottom: 0.8rem; align-items: flex-start;">
+        <span style="flex-shrink: 0; width: 1.5rem;">⚠️</span>
+        <span style="flex-shrink: 0; width: 3.5rem; font-weight: bold; color: var(--text-primary);">주의:</span>
+        <span style="flex-grow: 1; word-break: keep-all;">${info.weaknesses}</span>
       </li>
-      <li style="display: flex; gap: 0.8rem; margin-bottom: 0.8rem; align-items: flex-start;">
-        <span style="min-width: 1.2rem;">💡</span>
-        <div><strong>팁:</strong> ${info.tips}</div>
+      <li style="display: flex; margin-bottom: 0.8rem; align-items: flex-start;">
+        <span style="flex-shrink: 0; width: 1.5rem;">💡</span>
+        <span style="flex-shrink: 0; width: 3.5rem; font-weight: bold; color: var(--text-primary);">팁:</span>
+        <span style="flex-grow: 1; word-break: keep-all;">${info.tips}</span>
       </li>
     </ul>
   `;
@@ -292,5 +295,5 @@ function getSynergyText(my, other) {
     traits.push(other[3] === 'J' ? "마감 기한을 엄수하고 계획적인 모습을 보이세요." : "융통성 있는 대안을 제시하며 압박감을 줄여주세요.");
   }
 
-  return traits.length > 0 ? traits.join("<br><span style='color: var(--gold); margin-right: 0.5rem;'>✨</span>") : "서로 보완적인 관계입니다. 상대방의 강점을 신뢰하고 협력하세요.";
+  return traits.length > 0 ? traits.join("<br><span style='flex-shrink: 0; width: 1.5rem; display: inline-block; color: var(--gold);'>✨</span>") : "서로 보완적인 관계입니다. 상대방의 강점을 신뢰하고 협력하세요.";
 }

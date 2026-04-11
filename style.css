@@ -438,20 +438,27 @@ input[type="range"] {
   .report-header {
     flex-direction: column;
     align-items: flex-start;
-    gap: 0.5rem;
+    gap: 0.7rem;
+    border-bottom: 2px solid var(--glass-border);
+  }
+
+  /* 배지를 상단으로 이동시켜 시각적 가이드 역할 수행 */
+  .report-header .badge {
+    order: -1; 
+    font-size: 0.7rem;
+    padding: 0.2rem 0.6rem;
   }
 
   .report-header h2 {
-    font-size: 1.3rem;
+    font-size: 1.2rem;
+    line-height: 1.4;
+    word-break: keep-all;
   }
 
   .report-header p {
     font-size: 0.85rem;
     color: var(--text-secondary);
-  }
-
-  .result-grid {
-    gap: 1.5rem;
+    line-height: 1.5;
   }
 }
 

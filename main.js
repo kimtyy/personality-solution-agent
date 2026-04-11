@@ -171,7 +171,7 @@ function renderReport(mbti, enneagram, mbtiInfo, enneagramInfo, stress) {
   const analysisReport = document.getElementById('analysis-report');
   const alertContainer = document.getElementById('alert-container');
 
-  reportTitle.textContent = `${mbti} ${enneagram}번 유형 - 입체적 자아 분석 리포트`;
+  reportTitle.innerHTML = `<span style="display:block; margin-bottom: 0.2rem;">${mbti} ${enneagram}번 유형</span><span style="font-size: 0.85em; font-weight: 400; opacity: 0.9;">입체적 자아 분석 리포트</span>`;
 
   let reportHTML = `
     <p style="margin-bottom: 1.2rem;"><strong>[종합 진단]</strong> 당신은 <strong>${mbti}</strong> 유형으로서 <strong>${mbtiInfo.strengths}</strong> 능력이 탁월하며, 

@@ -208,6 +208,9 @@ function renderChart(functions) {
 
   if (radarChart) radarChart.destroy();
 
+  // 모바일 여부에 따라 폰트 크기 조절
+  const isMobile = window.innerWidth < 600;
+
   radarChart = new Chart(ctx, {
     type: 'radar',
     data: {
@@ -226,7 +229,11 @@ function renderChart(functions) {
         r: {
           angleLines: { color: 'rgba(255, 255, 255, 0.1)' },
           grid: { color: 'rgba(255, 255, 255, 0.1)' },
-          pointLabels: { color: '#94a3b8', font: { size: 10 } },
+          pointLabels: { 
+            color: '#94a3b8', 
+            font: { size: isMobile ? 8 : 11 },
+            padding: 5
+          },
           ticks: { display: false, max: 100, min: 0 }
         }
       },

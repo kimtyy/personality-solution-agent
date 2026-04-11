@@ -1,0 +1,44 @@
+WARNING! `--confirm` is deprecated, please use `--yes` instead
+The "--name" option is deprecated (https://vercel.link/name-flag)
+Retrieving project…
+Deploying kimtyy-3779s-projects/personality-solution-agent
+Uploading [--------------------] (0.0B/210B)
+Uploading [====================] (210.0B/210B)
+Inspect: https://vercel.com/kimtyy-3779s-projects/personality-solution-agent/Epbe4Nkw2QDLLp4Xn49u3ym8ayD2 [2s]
+Production: https://personality-solution-agent-q4fbrmh9f-kimtyy-3779s-projects.vercel.app [2s]
+Building...
+Building...
+Building: Running build in Washington, D.C., USA (East) – iad1
+Building: Build machine configuration: 2 cores, 8 GB
+Building: Retrieving list of deployment files...
+Building: Previous build caches not available.
+Building: Downloading 8 deployment files...
+Building: Running "vercel build"
+Building: Vercel CLI 50.42.0
+Building: Build Completed in /vercel/output [21ms]
+Building: Deploying outputs...
+[2K[1A[2K[GProduction: https://personality-solution-agent-q4fbrmh9f-kimtyy-3779s-projects.vercel.app [8s]
+Completing...
+Aliased: https://personality-solution-agent.vercel.app [8s]
+{
+  "status": "ok",
+  "deployment": {
+    "id": "dpl_Epbe4Nkw2QDLLp4Xn49u3ym8ayD2",
+    "url": "https://personality-solution-agent-q4fbrmh9f-kimtyy-3779s-projects.vercel.app",
+    "inspectorUrl": "https://vercel.com/kimtyy-3779s-projects/personality-solution-agent/Epbe4Nkw2QDLLp4Xn49u3ym8ayD2",
+    "readyState": "READY",
+    "target": "production",
+    "deploymentApiUrl": "https://api.vercel.com/v13/deployments/dpl_Epbe4Nkw2QDLLp4Xn49u3ym8ayD2"
+  },
+  "message": "Deployment personality-solution-agent-q4fbrmh9f-kimtyy-3779s-projects.vercel.app ready.",
+  "next": [
+    {
+      "command": "vercel inspect personality-solution-agent-q4fbrmh9f-kimtyy-3779s-projects.vercel.app --token vca_2tv7iEMHIyqmQNxCgaPRe7otAigEyKHz2YzJrP4EYGgnVO3Va51Ri6NU",
+      "when": "Inspect deployment"
+    },
+    {
+      "command": "vercel deploy --prod --token vca_2tv7iEMHIyqmQNxCgaPRe7otAigEyKHz2YzJrP4EYGgnVO3Va51Ri6NU",
+      "when": "Promote to production"
+    }
+  ]
+}

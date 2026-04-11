@@ -244,15 +244,53 @@ function renderChart(functions) {
 }
 
 function updateColleagueTips() {
+  const myMbti = document.getElementById('mbti-select').value;
   const colleagueMbti = document.getElementById('colleague-mbti').value;
   const tipsContainer = document.getElementById('colleague-tips');
   const info = MBTI_DATA[colleagueMbti];
 
-  tipsContainer.innerHTML = `
-    <ul style="list-style: none; padding: 0;">
-      <li style="margin-bottom: 1rem;">✅ <strong>강점 활용:</strong> ${info.strengths}</li>
-      <li style="margin-bottom: 1rem;">⚠️ <strong>주의 사항:</strong> ${info.weaknesses}</li>
-      <li style="margin-bottom: 1rem;">💡 <strong>소통 팁:</strong> ${info.tips}</li>
+  // 시너지 분석 로직
+  let synergyHTML = `
+    <div style="margin-bottom: 1.5rem; padding-bottom: 1rem; border-bottom: 1px dashed var(--glass-border);">
+      <h4 style="color: var(--gold); margin-bottom: 0.5rem; font-size: 1rem;">🤝 ${myMbti} × ${colleagueMbti} 시너지 분석</h4>
+      <p style="font-size: 0.9rem; color: var(--text-primary); line-height: 1.4;">
+        ${getSynergyText(myMbti, colleagueMbti)}
+      </p>
+    </div>
+    <ul style="list-style: none; padding: 0; font-size: 0.95rem;">
+      <li style="display: flex; gap: 0.8rem; margin-bottom: 0.8rem; align-items: flex-start;">
+        <span style="min-width: 1.2rem;">✅</span>
+        <div><strong>강점:</strong> ${info.strengths}</div>
+      </li>
+      <li style="display: flex; gap: 0.8rem; margin-bottom: 0.8rem; align-items: flex-start;">
+        <span style="min-width: 1.2rem;">⚠️</span>
+        <div><strong>주의:</strong> ${info.weaknesses}</div>
+      </li>
+      <li style="display: flex; gap: 0.8rem; margin-bottom: 0.8rem; align-items: flex-start;">
+        <span style="min-width: 1.2rem;">💡</span>
+        <div><strong>팁:</strong> ${info.tips}</div>
+      </li>
     </ul>
   `;
+  tipsContainer.innerHTML = synergyHTML;
+}
+
+function getSynergyText(my, other) {
+  if (my === other) return "같은 유형이군요! 서로의 논리 구조를 잘 이해하지만, 동시에 같은 사각지대(Weakness)를 가질 수 있으니 주의하세요.";
+  
+  let traits = [];
+  // S vs N 차이
+  if (my[1] !== other[1]) {
+    traits.push(other[1] === 'S' ? "구체적인 데이터와 사실 위주로 설명하세요." : "전체적인 비전과 아이디어의 가치를 먼저 제시하세요.");
+  }
+  // T vs F 차이
+  if (my[2] !== other[2]) {
+    traits.push(other[2] === 'T' ? "논리적인 인과관계와 성과를 강조하세요." : "업무의 의미와 사람에게 미치는 영향을 고려해 대화하세요.");
+  }
+  // J vs P 차이
+  if (my[3] !== other[3]) {
+    traits.push(other[3] === 'J' ? "마감 기한을 엄수하고 계획적인 모습을 보이세요." : "융통성 있는 대안을 제시하며 압박감을 줄여주세요.");
+  }
+
+  return traits.length > 0 ? traits.join("<br><span style='color: var(--gold); margin-right: 0.5rem;'>✨</span>") : "서로 보완적인 관계입니다. 상대방의 강점을 신뢰하고 협력하세요.";
 }

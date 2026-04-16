@@ -9,11 +9,11 @@ const LandingView = ({ personality }) => {
         <div style={{ display: 'inline-block', padding: '0.5rem 1rem', background: 'rgba(139, 92, 246, 0.1)', color: 'var(--primary)', borderRadius: '2rem', fontSize: '0.8rem', fontWeight: 600, marginBottom: '1.5rem', border: '1px solid var(--primary-dim)' }}>
           PRO AI ANALYSIS VERSION
         </div>
-        <h1 style={{ fontSize: '3.5rem', marginBottom: '1.5rem', lineHeight: 1.1 }}>
+        <h1 className="hero-title" style={{ marginBottom: '1.5rem', lineHeight: 1.1 }}>
           입체적 성격 분석 및<br />
           <span style={{ background: 'linear-gradient(90deg, #8B5CF6, #7DD3FC)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' }}>비즈니스 솔루션</span>
         </h1>
-        <p style={{ color: 'var(--text-secondary)', fontSize: '1.2rem', maxWidth: '600px', margin: '0 auto 3rem' }}>
+        <p style={{ color: 'var(--text-secondary)', fontSize: '1.1rem', maxWidth: '600px', margin: '0 auto 3rem', padding: '0 1rem' }}>
           단순한 테스트를 넘어, 당신의 잠재력과 비즈니스 시너지를 데이터로 증명합니다. 인공지능 기반의 프리미엄 성격 큐레이션을 경험해 보세요.
         </p>
 

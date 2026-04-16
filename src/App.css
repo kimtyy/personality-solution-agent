@@ -111,3 +111,15 @@ h1, h2, h3, h4 {
 .animate-fade-in {
   animation: fadeIn 0.8s ease forwards;
 }
+
+/* Mobile Optimizations */
+.hero-title {
+  font-size: 3.5rem;
+}
+
+@media (max-width: 768px) {
+  .hero-title {
+    font-size: 2.2rem !important;
+    word-break: keep-all;
+  }
+}

@@ -1,62 +1,106 @@
 import React, { useState } from 'react';
 import { MBTI_DATA } from '../constants/data';
-import { ShieldCheck, Zap, AlertCircle } from 'lucide-react';
+import { ShieldCheck, Zap, AlertCircle, MessageSquare, Target, XCircle } from 'lucide-react';
 
 const SynergyView = ({ personality }) => {
   const [colleagueMbti, setColleagueMbti] = useState('ENFP');
   const myMbti = personality.finalResult.mbti;
   const info = MBTI_DATA[colleagueMbti];
-
-  const getSynergyText = (my, other) => {
-    if (my === other) return "같은 유형이군요! 서로의 사고 방식을 잘 이해하지만, 동시에 사각지대도 겹칠 수 있으니 주의하세요.";
-    let traits = [];
-    if (my[1] !== other[1]) traits.push(other[1] === 'S' ? "구체적 데이터를 활용하세요." : "비전과 아이디어를 먼저 제시하세요.");
-    if (my[2] !== other[2]) traits.push(other[2] === 'T' ? "논리적 인과관계를 강조하세요." : "사람에게 미치는 영향을 고려하세요.");
-    return traits.length > 0 ? traits.join(" ") : "서로 보완적인 관계입니다.";
-  };
+  const guide = info.synergyGuide;
 
   return (
     <div className="glass-panel" style={{ padding: '2.5rem', marginTop: '3rem' }}>
-      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '2rem', flexWrap: 'wrap', gap: '1rem' }}>
-        <h2 className="section-title">동료 협업 시너지 가이드</h2>
-        <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
-          <span style={{ fontSize: '0.8rem', color: 'var(--text-secondary)' }}>대상 동료:</span>
+      {/* Header Section */}
+      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '2.5rem', flexWrap: 'wrap', gap: '1rem' }}>
+        <div>
+          <h2 className="section-title">동료 협업 시너지 가이드</h2>
+          <p style={{ color: 'var(--text-secondary)', fontSize: '0.9rem', marginTop: '0.5rem' }}>대상 동료의 유형을 선택하여 맞춤형 협업 전략을 확인하세요.</p>
+        </div>
+        <div style={{ display: 'flex', alignItems: 'center', gap: '1rem', background: 'rgba(255,255,255,0.05)', padding: '0.5rem 1rem', borderRadius: '1rem', border: '1px solid var(--glass-border)' }}>
+          <span style={{ fontSize: '0.9rem', fontWeight: 600, color: 'var(--primary)' }}>대상 동료:</span>
           <select 
             value={colleagueMbti} 
             onChange={(e) => setColleagueMbti(e.target.value)}
-            style={{ padding: '0.5rem 1rem', background: 'rgba(255,255,255,0.05)', border: '1px solid var(--glass-border)', color: 'white', borderRadius: '0.5rem' }}
+            style={{ 
+              padding: '0.3rem 0.5rem', 
+              background: 'transparent', 
+              border: 'none', 
+              color: 'white', 
+              fontWeight: 700,
+              fontSize: '1rem',
+              outline: 'none',
+              cursor: 'pointer'
+            }}
           >
-            {Object.keys(MBTI_DATA).map(type => <option key={type} value={type}>{type}</option>)}
+            {Object.keys(MBTI_DATA).map(type => <option key={type} value={type} style={{ background: '#1e293b' }}>{type}</option>)}
           </select>
         </div>
       </div>
 
-      <div className="glass-card" style={{ padding: '1.5rem', marginBottom: '2rem', background: 'rgba(125, 211, 252, 0.05)', borderColor: 'var(--secondary-dim)' }}>
-        <p style={{ display: 'flex', alignItems: 'center', gap: '0.7rem', color: 'var(--secondary)', fontWeight: 600 }}>
-          <Zap size={18} /> {myMbti} × {colleagueMbti} 전략적 궁합
-        </p>
-        <p style={{ marginTop: '0.5rem', fontSize: '0.95rem', lineHeight: 1.5 }}>{getSynergyText(myMbti, colleagueMbti)}</p>
+      {/* Main Strategy Dashboard */}
+      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '2rem', marginBottom: '2rem' }}>
+        
+        {/* Left: Personality Style & Approach */}
+        <div style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
+          <div className="glass-card" style={{ padding: '2rem', flex: 1, borderLeft: '4px solid var(--primary)' }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '0.7rem', marginBottom: '1.2rem', color: 'var(--primary)', fontWeight: 700, fontSize: '1.1rem' }}>
+              <Zap size={20} /> 협업 스타일에 대한 이해
+            </div>
+            <div style={{ fontSize: '1.2rem', fontWeight: 700, color: 'var(--text-primary)', marginBottom: '1rem' }}>
+              "{guide.style}"
+            </div>
+            <p style={{ fontSize: '0.95rem', color: 'var(--text-secondary)', lineHeight: 1.6 }}>
+              {guide.approach}
+            </p>
+          </div>
+          
+          <div className="glass-card" style={{ padding: '2rem', background: 'rgba(139, 92, 246, 0.05)' }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '0.7rem', marginBottom: '1.2rem', color: 'var(--accent-gold)', fontWeight: 700, fontSize: '1.1rem' }}>
+              <MessageSquare size={20} /> 실전 대화 치트키 (Scripts)
+            </div>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+              {guide.phrases.map((phrase, idx) => (
+                <div key={idx} style={{ padding: '0.8rem 1rem', background: 'rgba(0,0,0,0.2)', borderRadius: '0.5rem', fontSize: '0.9rem', borderLeft: '2px solid var(--accent-gold)', fontStyle: 'italic' }}>
+                  "{phrase}"
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+
+        {/* Right: Actions & Restrictions */}
+        <div style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
+          <div className="glass-card" style={{ padding: '2rem', background: 'rgba(34, 197, 94, 0.05)', borderColor: 'rgba(34, 197, 94, 0.2)' }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '0.7rem', marginBottom: '1.2rem', color: '#4ade80', fontWeight: 700, fontSize: '1.1rem' }}>
+              <ShieldCheck size={20} /> 권장 사항 (Recommended)
+            </div>
+            <ul style={{ listStyle: 'none', padding: 0, margin: 0, display: 'flex', flexDirection: 'column', gap: '0.8rem' }}>
+              {guide.do.map((item, idx) => (
+                <li key={idx} style={{ display: 'flex', alignItems: 'center', gap: '0.6rem', fontSize: '0.95rem', color: 'var(--text-primary)' }}>
+                  <div style={{ width: '6px', height: '6px', borderRadius: '50%', background: '#4ade80' }} /> {item}
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          <div className="glass-card" style={{ padding: '2rem', background: 'rgba(239, 68, 68, 0.05)', borderColor: 'rgba(239, 68, 68, 0.2)' }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '0.7rem', marginBottom: '1.2rem', color: '#f87171', fontWeight: 700, fontSize: '1.1rem' }}>
+              <XCircle size={20} /> 금기 사항 (Avoid)
+            </div>
+            <ul style={{ listStyle: 'none', padding: 0, margin: 0, display: 'flex', flexDirection: 'column', gap: '0.8rem' }}>
+              {guide.dont.map((item, idx) => (
+                <li key={idx} style={{ display: 'flex', alignItems: 'center', gap: '0.6rem', fontSize: '0.95rem', color: 'var(--text-primary)' }}>
+                  <div style={{ width: '6px', height: '6px', borderRadius: '50%', background: '#f87171' }} /> {item}
+                </li>
+              ))}
+            </ul>
+          </div>
+        </div>
+
       </div>
 
-      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))', gap: '1.5rem' }}>
-        <div style={{ padding: '1.2rem', background: 'rgba(255,255,255,0.02)', borderRadius: '0.75rem', border: '1px solid var(--glass-border)' }}>
-          <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', marginBottom: '0.8rem', color: 'var(--text-primary)', fontWeight: 600 }}>
-            <ShieldCheck size={16} color="var(--primary)" /> 강점 활용
-          </div>
-          <p style={{ fontSize: '0.85rem', color: 'var(--text-secondary)' }}>{info.strengths}</p>
-        </div>
-        <div style={{ padding: '1.2rem', background: 'rgba(255,255,255,0.02)', borderRadius: '0.75rem', border: '1px solid var(--glass-border)' }}>
-          <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', marginBottom: '0.8rem', color: 'var(--text-primary)', fontWeight: 600 }}>
-            <AlertCircle size={16} color="var(--error)" /> 협업 시 주의
-          </div>
-          <p style={{ fontSize: '0.85rem', color: 'var(--text-secondary)' }}>{info.weaknesses}</p>
-        </div>
-        <div style={{ padding: '1.2rem', background: 'rgba(255,255,255,0.02)', borderRadius: '0.75rem', border: '1px solid var(--glass-border)' }}>
-          <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', marginBottom: '0.8rem', color: 'var(--text-primary)', fontWeight: 600 }}>
-            <Zap size={16} color="var(--accent-gold)" /> 커뮤니케이션 팁
-          </div>
-          <p style={{ fontSize: '0.85rem', color: 'var(--text-secondary)' }}>{info.tips}</p>
-        </div>
+      <div style={{ textAlign: 'center', color: 'var(--text-secondary)', fontSize: '0.8rem', opacity: 0.6 }}>
+        Sovereign AI Synergy Engine v2.0 • Real-time Collaboration Intelligence
       </div>
     </div>
   );

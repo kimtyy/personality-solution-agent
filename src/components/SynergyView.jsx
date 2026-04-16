@@ -18,7 +18,7 @@ const SynergyView = ({ personality }) => {
   return (
     <div className="glass-panel" style={{ padding: '2.5rem', marginTop: '3rem' }}>
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '2rem', flexWrap: 'wrap', gap: '1rem' }}>
-        <h2 style={{ fontSize: '1.8rem' }}>동료 협업 시너지 가이드</h2>
+        <h2 className="section-title">동료 협업 시너지 가이드</h2>
         <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
           <span style={{ fontSize: '0.8rem', color: 'var(--text-secondary)' }}>대상 동료:</span>
           <select 

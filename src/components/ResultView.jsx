@@ -44,7 +44,13 @@ const ResultView = ({ personality }) => {
       r: {
         angleLines: { color: 'rgba(255, 255, 255, 0.1)' },
         grid: { color: 'rgba(255, 255, 255, 0.1)' },
-        pointLabels: { color: '#94a3b8', font: { size: 10 } },
+        pointLabels: { 
+          color: '#94a3b8', 
+          font: { 
+            size: window.innerWidth < 768 ? 9 : 12,
+            family: 'Plus Jakarta Sans'
+          } 
+        },
         ticks: { display: false, stepSize: 20 },
       },
     },
@@ -55,7 +61,7 @@ const ResultView = ({ personality }) => {
   return (
     <div className="animate-fade-in">
       <div style={{ textAlign: 'center', marginBottom: '3rem' }}>
-        <h1 style={{ fontSize: '2.5rem', marginBottom: '0.5rem' }}>입체적 자아 분석 리포트</h1>
+        <h1 className="section-title" style={{ marginBottom: '0.5rem' }}>입체적 자아 분석 리포트</h1>
         <div style={{ color: 'var(--accent-gold)', fontWeight: 600, fontSize: '0.9rem', letterSpacing: '0.1em' }}>PRO AI ANALYSIS</div>
       </div>
 
@@ -64,8 +70,8 @@ const ResultView = ({ personality }) => {
           <Radar data={radarData} options={radarOptions} />
         </div>
 
-        <div className="glass-card" style={{ padding: '2rem' }}>
-          <h3 style={{ marginBottom: '1.5rem', borderBottom: '1px solid var(--glass-border)', paddingBottom: '1rem', color: 'var(--primary)' }}>
+        <div className="glass-card" style={{ padding: '2.5rem' }}>
+          <h3 style={{ marginBottom: '2rem', borderBottom: '1px solid var(--glass-border)', paddingBottom: '1.2rem', color: 'var(--primary)', letterSpacing: '0.05em' }}>
             [전문 분석 보고서]
           </h3>
           <div style={{ fontSize: '0.95rem', color: 'var(--text-primary)', display: 'flex', flexDirection: 'column', gap: '1.2rem' }}>
